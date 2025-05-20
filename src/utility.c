@@ -1,11 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "../include/utility.h"
+#include "../include/battle-arena.h"
 
 #include <math.h>
 
-#include "../include/logger.h"
 
 int max(const int a, const int b) {
     return (a > b) ? a : b;

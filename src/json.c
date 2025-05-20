@@ -1,13 +1,13 @@
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "../include/json.h"
+#include "../include/battle-arena.h"
 
 #include <string.h>
 
-#include "../include/utility.h"
-#include "../include/structs.h"
-#include "../include/sql.h"
+static ITEM items_storage[NUMBER_OF_ITEMS];
+ITEM_LIST item_list = {items_storage, 0};
 
 int skip(FILE *file) {
     int c;
@@ -20,8 +20,9 @@ int skip(FILE *file) {
 }
 
 void load_items(FILE *json) {
-    int c;
+    item_list.count = 0;
 
+    int c;
     while ((c = fgetc(json)) != EOF && c != '[') {}
 
     while ((c = fgetc(json)) != EOF && c != ']') {
@@ -125,7 +126,11 @@ void load_items(FILE *json) {
                 }
             }
             if (attributes[0] && attributes[1] && attributes[2] && attributes[3] && attributes[4] && attributes[5]) {
-                insert_item(item);
+                if (item_list.count >= NUMBER_OF_ITEMS) {
+                    error("ERR_TOO_MANY_ITEMS");
+                }
+                item_list.items[item_list.count] = item;
+                item_list.count++;
             } else {
                 error(ERR_MISSING_ATTRIBUTE);
             }

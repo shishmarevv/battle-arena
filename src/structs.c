@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "../include/structs.h"
+#include "../include/battle-arena.h"
 
 bool check_slots(const UNIT unit) {
     int total_slots = 0;
@@ -17,6 +17,13 @@ bool check_slots(const UNIT unit) {
     return total_slots <= 2;
 }
 
+ITEM* find(const char* name) {
+    for(int i=0; i< item_list.count; i++) {
+        if(strcasecmp(item_list.items[i].name, name) == 0) return &(item_list.items[i]);
+    }
+    return NULL;
+}
+
 void init_army(ARMY *army) {
     army -> top = -1;
 
@@ -28,11 +35,11 @@ void init_army(ARMY *army) {
     }
 }
 
-bool is_full(const ARMY *s) {
+bool is_full(ARMY *s) {
     return s->top == 4;
 }
 
-bool push(ARMY *army, const UNIT unit) {
+bool push(ARMY *army, UNIT unit) {
     if (is_full(army)) {
         return false;
     }
@@ -41,7 +48,7 @@ bool push(ARMY *army, const UNIT unit) {
 }
 
 
-bool pop_at(ARMY *army, const int position) {
+bool pop_at(ARMY *army,int position) {
     if (position < 0 || position > army->top) return false;
 
     for (int i = position; i < army->top; ++i) {
@@ -52,7 +59,7 @@ bool pop_at(ARMY *army, const int position) {
 }
 
 
-bool peek_at(const ARMY *army, const int position, UNIT *unit) {
+bool peek_at(ARMY *army,int position, UNIT *unit) {
     if (position < 0 || position > army->top) {
         return false;
     }

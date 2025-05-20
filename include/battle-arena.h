@@ -106,7 +106,6 @@ void log_message(LogLevel lvl, const char *message, ...);
 #define LOG_WARN(fmt, ...)  log_message(LOG_LEVEL_WARN,  "WARN:  " fmt, ##__VA_ARGS__)
 #define LOG_ERROR(fmt, ...) log_message(LOG_LEVEL_ERROR, "ERROR: " fmt, ##__VA_ARGS__)
 
-
 typedef enum {
     MENU,
     CREATE_ARMY_1,

@@ -6,9 +6,25 @@
 
 #include <string.h>
 
+/**
+ * Storage for all items in the game.
+ * This is a static array with a fixed maximum size.
+ */
 static ITEM items_storage[NUMBER_OF_ITEMS];
+
+/**
+ * Global list of all available items.
+ * Contains a pointer to the items array and a count of loaded items.
+ */
 ITEM_LIST item_list = {items_storage, 0};
 
+/**
+ * Skips whitespace and newline characters in a file stream.
+ * Advances the file pointer until a non-whitespace character is found.
+ *
+ * @param file The file stream to read from
+ * @return The first non-whitespace character found, or EOF if end of file is reached
+ */
 int skip(FILE *file) {
     int c;
     while ((c = fgetc(file)) != EOF) {
@@ -19,6 +35,25 @@ int skip(FILE *file) {
     return EOF;
 }
 
+/**
+ * Loads item definitions from a JSON file into the global item list.
+ * Parses a JSON array of item objects, each containing name, att, def, slots, range, and radius attributes.
+ *
+ * The function expects a JSON structure like:
+ * [
+ *   {
+ *     "name": "ItemName",
+ *     "att": AttackValue,
+ *     "def": DefenseValue,
+ *     "slots": SlotsRequired,
+ *     "range": AttackRange,
+ *     "radius": EffectRadius
+ *   },
+ *   ...
+ * ]
+ *
+ * @param json The file stream containing JSON data to parse
+ */
 void load_items(FILE *json) {
     item_list.count = 0;
 

@@ -41,7 +41,6 @@ typedef struct item {
 } ITEM;
 
 
-
 typedef struct unit {
     char name[MAX_NAME + 1];
     const ITEM *item1;
